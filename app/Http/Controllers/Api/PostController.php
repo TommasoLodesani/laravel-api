@@ -13,9 +13,19 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Post::all());
+        $per_page = $request->query('per_page', 10);
+        if ($per_page < 1 || $per_page > 100) {
+            return response()->json(['success' => false], 400);
+        }
+
+        $posts = Post::with('user')->with('category')->with('tags')->paginate($per_page);
+
+        return response()->json([
+            'success'   => true,
+            'response'  => $posts
+        ]);
     }
 
     /**
