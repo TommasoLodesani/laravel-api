@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'id', 'email', 'email_verified_at', 'created_at', 'updated_at'
     ];
 
     /**
@@ -41,7 +41,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\UserDetails'); // nella tabella che non ha il foreign key
     }
 
-    public function posts(){
+    public function posts() {
         return $this->hasMany('App\Models\Post');
     }
 }
